@@ -8,10 +8,14 @@
  * LICENSE file present in the project repository where this source code is maintained.
  */
 
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-parcelize'
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.devtools.ksp' version '1.9.10-1.0.13'
+    id 'kotlin-parcelize'
+}
+
 group = 'com.github.readium'
 
 
@@ -35,13 +39,14 @@ project.ext.versionCode = 1_000_000 * major + 10_000 * minor + 100 * patch + bui
 
 
 android {
+    namespace "org.readium.r2.testapp"
 
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 33
 
-        applicationId "org.readium.r2reader"
+        applicationId "org.readium.r2.testapp"
 
         versionCode project.ext.versionCode
         versionName project.ext.versionName
@@ -49,14 +54,15 @@ android {
         ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
     buildFeatures {
+        buildConfig true
         dataBinding true
         viewBinding true
     }
@@ -64,6 +70,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
         }
     }
     packagingOptions {
@@ -147,14 +157,12 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
 
     // Room database
-    final room_version = '2.3.0'
+    final room_version = '2.5.2'
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    //noinspection LifecycleAnnotationProcessorWithJava8
-    kapt "androidx.lifecycle:lifecycle-compiler:2.3.1"
 
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testImplementation "junit:junit:4.13.2"

@@ -51,7 +51,7 @@ open class ReaderActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        ViewModelProvider(this).get(ReaderViewModel::class.java).let { model ->
+        ViewModelProvider(this, factory = modelFactory).get(ReaderViewModel::class.java).let { model ->
             publication = model.publication
             model.channel.receive(this) { handleReaderFragmentEvent(it) }
         }
@@ -122,9 +122,6 @@ open class ReaderActivity : AppCompatActivity() {
         }
     }
 
-    override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
-        return modelFactory
-    }
 
     override fun finish() {
         setResult(Activity.RESULT_OK, intent)
@@ -138,6 +135,8 @@ open class ReaderActivity : AppCompatActivity() {
             is ReaderViewModel.Event.Failure -> {
                 Toast.makeText(this, event.error.getUserMessage(this), Toast.LENGTH_LONG).show()
             }
+
+            else -> {}
         }
     }
 

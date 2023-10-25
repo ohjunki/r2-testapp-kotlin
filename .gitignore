@@ -9,3 +9,4 @@
 .externalNativeBuild
 *.aab
 r2-testapp/release
+/.idea

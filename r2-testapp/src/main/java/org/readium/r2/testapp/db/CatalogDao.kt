@@ -43,5 +43,5 @@ interface CatalogDao {
      * @param id The id of the Catalog model to delete
      */
     @Query("DELETE FROM " + Catalog.TABLE_NAME + " WHERE " + Catalog.ID + " = :id")
-    suspend fun deleteCatalog(id: Long)
+    suspend fun deleteCatalog(id: Long) : Integer
 }

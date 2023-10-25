@@ -14,7 +14,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
-import org.readium.r2.shared.Injectable
 import org.readium.r2.streamer.server.Server
 import org.readium.r2.testapp.BuildConfig.DEBUG
 import timber.log.Timber

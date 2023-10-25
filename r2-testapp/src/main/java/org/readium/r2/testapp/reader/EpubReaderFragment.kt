@@ -200,7 +200,7 @@ class EpubReaderFragment : VisualReaderFragment(), EpubNavigatorFragment.Listene
     private fun connectSearch() {
         menuSearch.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
 
-            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 if (isSearchViewIconified) { // It is not a state restoration.
                     showSearchFragment()
                 }
@@ -209,7 +209,7 @@ class EpubReaderFragment : VisualReaderFragment(), EpubNavigatorFragment.Listene
                 return true
             }
 
-            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 isSearchViewIconified = true
                 childFragmentManager.popBackStack()
                 menuSearchView.clearFocus()
